@@ -382,17 +382,6 @@
             margin-bottom: 1.25rem;
         }
 
-        .hf-surface-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.65rem 0;
-            border-bottom: 1px solid var(--line);
-            font-size: 0.875rem;
-        }
-
-        .hf-surface-row:last-child { border-bottom: none; }
-
         .hf-consist-stat {
             font-size: 0.9375rem;
             color: var(--ink-soft);
@@ -421,169 +410,11 @@
             left: 0;
         }
 
-        .hf-tag-inconsistent {
-            font-size: 0.6875rem;
-            font-weight: 700;
-            border-radius: 0.4rem;
-            padding: 0.2rem 0.5rem;
-        }
-
-        .hf-tag-inconsistent.a { background: #fee2e2; color: #b91c1c; }
-
-        .hf-tag-inconsistent.b { background: #ffedd5; color: #c2410c; text-transform: uppercase; }
-
-        .hf-tag-inconsistent.c { background: #fecaca; color: #991b1b; border: 1px dashed #b91c1c; }
-
-        .hf-tag-unified {
-            font-size: 0.6875rem;
-            font-weight: 700;
-            border-radius: 999px;
-            padding: 0.2rem 0.6rem;
-            background: rgba(239, 68, 68, 0.12);
-            color: #b91c1c;
-        }
-
         /* ---------- Decision callout ---------- */
-
-        .decision-callout {
-            margin-top: 1.5rem;
-            display: flex;
-            gap: 0.875rem;
-            background: rgba(42, 100, 81, 0.05);
-            border: 1px solid rgba(42, 100, 81, 0.18);
-            border-radius: 1rem;
-            padding: 1.125rem 1.25rem;
-        }
-
-        .decision-callout .icon {
-            width: 1.125rem;
-            height: 1.125rem;
-            color: var(--green);
-            margin-top: 0.15rem;
-        }
-
-        .decision-callout-label {
-            font-size: 0.6875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 700;
-            color: var(--green);
-            margin-bottom: 0.25rem;
-        }
-
-        .decision-callout-text {
-            font-size: 0.9375rem;
-            color: var(--ink-body);
-            line-height: 1.6;
-        }
 
         /* ---------- Technical details disclosure ---------- */
 
-        .tech-details {
-            margin-top: 1.5rem;
-            border: 1px solid var(--line);
-            border-radius: 1rem;
-            background: var(--surface);
-            overflow: hidden;
-        }
-
-        .tech-details summary {
-            cursor: pointer;
-            list-style: none;
-            padding: 1rem 1.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.875rem;
-            font-weight: 700;
-            font-family: 'Outfit', sans-serif;
-            color: var(--ink);
-        }
-
-        .tech-details summary::-webkit-details-marker { display: none; }
-
-        .tech-details summary .chevron {
-            width: 1rem;
-            height: 1rem;
-            color: var(--ink-soft);
-            transition: transform 0.2s ease;
-            flex-shrink: 0;
-        }
-
-        .tech-details[open] summary .chevron { transform: rotate(180deg); }
-
-        .tech-details summary .tag-for-eng {
-            font-size: 0.6875rem;
-            font-weight: 600;
-            text-transform: none;
-            color: var(--ink-soft);
-            margin-left: 0.5rem;
-        }
-
-        .tech-details-body {
-            padding: 0 1.25rem 1.25rem;
-            border-top: 1px solid var(--line);
-        }
-
-        .tech-details-body ul {
-            margin: 1rem 0 0;
-            padding: 0;
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.625rem;
-        }
-
-        .tech-details-body li {
-            position: relative;
-            padding-left: 1rem;
-            color: var(--ink-body);
-            font-size: 0.9375rem;
-            line-height: 1.6;
-        }
-
-        .tech-details-body li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.55rem;
-            width: 0.3125rem;
-            height: 0.3125rem;
-            border-radius: 999px;
-            background: var(--green);
-        }
-
-        .tech-details-body li.placeholder {
-            color: var(--ink-soft);
-            font-style: italic;
-        }
-
         /* ---------- Reflection ---------- */
-
-        .cs-reflection {
-            margin-top: 2rem;
-            padding: 1.75rem;
-            border-radius: 1.25rem;
-            background: var(--surface);
-            border: 1px solid var(--line);
-        }
-
-        .cs-reflection-title {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 1.0625rem;
-            margin-bottom: 0.875rem;
-        }
-
-        .cs-reflection-text {
-            font-size: 0.9375rem;
-            color: var(--ink-body);
-            line-height: 1.7;
-        }
-
-        .cs-reflection-text + .cs-reflection-text { margin-top: 0.75rem; }
-
-        .cs-reflection-text.placeholder { color: var(--ink-soft); font-style: italic; }
 
         .cs-extra-list li {
             position: relative;
