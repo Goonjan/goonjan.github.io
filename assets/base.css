@@ -1,0 +1,123 @@
+/* ============================================================
+   base.css — shared foundation for every page
+   design tokens · reset · layout primitives · shared atoms
+   Fonts are loaded via <link> in each page's <head>, not @import,
+   so they can be preconnected and don't block CSS parsing.
+   ============================================================ */
+
+/* ---------- Design tokens ---------- */
+:root {
+    --bg: #fbf9f6;
+    --surface: #ffffff;
+    --ink: #1c1917;
+    --ink-soft: #57534e;
+    --ink-body: #44403c;
+    --green: #2a6451;
+    --green-deep: #204c3d;
+    --sand: #f4a261;
+    --line: rgba(28, 25, 23, 0.08);
+    --dot: #d6d1c9;
+    --footer-ink: #c9dbd3;
+    --footer-ink-soft: #9db8ac;
+    --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+    --wrap: 72rem;
+}
+
+/* ---------- Reset ---------- */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    background: var(--bg);
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    overflow-x: clip;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+}
+
+::selection {
+    background: #2a6451;
+    color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ---------- Layout ---------- */
+.wrap {
+    max-width: var(--wrap);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+    .wrap {
+        padding-inline: 2rem;
+    }
+}
+
+/* ---------- Shared atoms ---------- */
+.icon {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    vertical-align: -0.125em;
+    flex-shrink: 0;
+}
+
+.eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    font-weight: 600;
+}

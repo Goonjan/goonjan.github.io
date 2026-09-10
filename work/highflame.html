@@ -4,6 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700;800&display=swap" />
     <meta name="description" content="Case study: Highflame — Enterprise LLM Security Platform built by Gunjan Vasara." />
     <title>Highflame — Case Study | Gunjan Vasara</title>
 
@@ -15,179 +19,18 @@
     <meta property="og:title" content="Highflame — Case Study | Gunjan Vasara" />
     <meta property="og:description" content="Case study: Highflame — Enterprise LLM Security Platform built by Gunjan Vasara." />
     <meta property="og:url" content="https://gunjanvasara.dev/work/highflame.html" />
-    <meta property="og:image" content="https://gunjanvasara.dev/images/highflame-hero.png" />
-    <meta property="og:image:width" content="1360" />
-    <meta property="og:image:height" content="560" />
+    <meta property="og:image" content="https://gunjanvasara.dev/images/highflame-hero-og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="494" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Highflame — Case Study | Gunjan Vasara" />
     <meta name="twitter:description" content="Case study: Highflame — Enterprise LLM Security Platform built by Gunjan Vasara." />
-    <meta name="twitter:image" content="https://gunjanvasara.dev/images/highflame-hero.png" />
+    <meta name="twitter:image" content="https://gunjanvasara.dev/images/highflame-hero-og.jpg" />
 
+    <link rel="stylesheet" href="../assets/base.css" />
+    <link rel="stylesheet" href="../assets/case-study.css" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
-
-        :root {
-            --bg: #fbf9f6;
-            --surface: #ffffff;
-            --ink: #1c1917;
-            --ink-soft: #57534e;
-            --ink-body: #44403c;
-            --green: #2a6451;
-            --green-deep: #204c3d;
-            --sand: #f4a261;
-            --line: rgba(28, 25, 23, 0.08);
-            --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
-        }
-
-        * { box-sizing: border-box; }
-
-        html { background: var(--bg); scroll-behavior: smooth; }
-
-        body {
-            margin: 0;
-            background: var(--bg);
-            color: var(--ink);
-            font-family: 'DM Sans', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        a { text-decoration: none; color: inherit; }
-
-        button { font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-
-        html, body { overflow-x: clip; }
-
-        img { max-width: 100%; display: block; }
-
-        .icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; flex-shrink: 0; }
-
-        .wrap {
-            max-width: 58rem;
-            margin: 0 auto;
-            padding: 0 1.25rem;
-        }
-
-        @media (min-width: 768px) {
-            .wrap { padding: 0 2rem; }
-        }
-
-        /* ---------- Nav ---------- */
-        .nav {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background: rgba(251, 249, 246, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--line);
-        }
-
-        .nav-inner {
-            max-width: 58rem;
-            margin: 0 auto;
-            padding: 0 1.25rem;
-            height: 4.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        @media (min-width: 768px) {
-            .nav-inner { padding: 0 2rem; }
-        }
-
-        .nav-logo {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 1.0625rem;
-            letter-spacing: -0.01em;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-mono {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 999px;
-            background: var(--green);
-            color: #fff;
-            display: grid;
-            place-items: center;
-            font-size: 0.875rem;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--ink-soft);
-            transition: color 0.2s ease;
-        }
-
-        .back-link:hover { color: var(--green); }
-
-        /* ---------- Hero ---------- */
-        .cs-hero { padding-block: 4rem 3rem; }
-
-        @media (min-width: 768px) {
-            .cs-hero { padding-block: 5.5rem 3.5rem; }
-        }
-
-        .eyebrow {
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--green);
-            font-weight: 600;
-        }
-
-        .cs-title {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 2.5rem;
-            letter-spacing: -0.02em;
-            line-height: 1.05;
-            margin-top: 0.75rem;
-        }
-
-        @media (min-width: 768px) {
-            .cs-title { font-size: 3.5rem; }
-        }
-
-        .cs-subtitle {
-            font-size: 1.125rem;
-            color: var(--ink-soft);
-            margin-top: 0.75rem;
-        }
-
-        .cs-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .tag-pill {
-            font-size: 0.75rem;
-            border-radius: 999px;
-            background: var(--surface);
-            border: 1px solid var(--line);
-            padding: 0.25rem 0.75rem;
-            color: var(--ink-soft);
-        }
-
-        .cs-intro {
-            max-width: 40rem;
-            margin-top: 2rem;
-            font-size: 1.125rem;
-            color: var(--ink-body);
-            line-height: 1.7;
-        }
-
-        /* ---------- Hero visual ---------- */
         .cs-hero-visual {
             margin-top: 2.5rem;
             border-radius: 1.25rem;
@@ -197,91 +40,8 @@
 
         .cs-hero-visual img { width: 100%; height: auto; display: block; }
 
-        /* ---------- Stats strip ---------- */
-        .cs-stats { padding-block: 2rem 1rem; }
-
-        .cs-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-        }
-
-        .stat-tile {
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 1.25rem;
-            padding: 1.5rem 1.75rem;
-            box-shadow: 0 4px 24px rgba(28, 25, 23, 0.05);
-        }
-
-        .stat-value {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 1.875rem;
-            letter-spacing: -0.01em;
-            color: var(--green);
-        }
-
-        .stat-label {
-            font-size: 0.8125rem;
-            color: var(--ink-soft);
-            margin-top: 0.375rem;
-            line-height: 1.4;
-        }
-
-        /* ---------- Chapters ---------- */
-        .chapter {
-            padding-block: 4.5rem;
-            border-top: 1px solid var(--line);
-            scroll-margin-top: 4.5rem;
-        }
-
-        .chapter-head { max-width: none; }
-
-        .chapter-kicker {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .chapter-num {
-            font-family: var(--mono);
-            font-size: 0.8125rem;
-            font-weight: 600;
-            color: var(--sand);
-            letter-spacing: 0.05em;
-        }
-
-        .chapter-cat {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: var(--ink-soft);
-            font-weight: 600;
-        }
-
-        .chapter-title {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 1.75rem;
-            letter-spacing: -0.01em;
-            margin-top: 0.625rem;
-        }
-
-        @media (min-width: 768px) {
-            .chapter-title { font-size: 2.125rem; }
-        }
-
-        .chapter-text {
-            margin-top: 1rem;
-            color: var(--ink-body);
-            line-height: 1.75;
-            font-size: 1.0625rem;
-        }
-
-        .chapter-visual { margin-top: 2.5rem; }
-
         /* ---------- Chapter 01: Platform dashboard ---------- */
+
         .hf-dashboard {
             background: var(--surface);
             border: 1px solid var(--line);
@@ -397,6 +157,7 @@
         .hf-dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; }
 
         /* ---------- Chapter 02: Threat event detail ---------- */
+
         .hf-event {
             background: var(--surface);
             border: 1px solid var(--line);
@@ -444,6 +205,7 @@
         }
 
         .hf-badge.critical { background: rgba(239, 68, 68, 0.12); color: #b91c1c; }
+
         .hf-badge.blocked { background: rgba(28, 25, 23, 0.08); color: var(--ink-soft); }
 
         .hf-section-label {
@@ -502,6 +264,7 @@
         }
 
         /* ---------- Chapter 03 / generic before-after compare ---------- */
+
         .compare-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -522,6 +285,7 @@
         }
 
         .compare-card.bug { --accent: var(--sand); }
+
         .compare-card.fix { --accent: var(--green); }
 
         .compare-card-title {
@@ -561,9 +325,11 @@
         }
 
         .compare-card.bug .hf-checkbox { border: 1px solid var(--line); background: var(--bg); }
+
         .compare-card.bug .hf-check-label { font-size: 0.6875rem; color: #a8a29e; }
 
         .compare-card.fix .hf-checkbox { border: 2px solid var(--green); background: rgba(42,100,81,.08); }
+
         .compare-card.fix .hf-check-label { font-size: 0.8125rem; color: var(--ink-body); font-weight: 600; }
 
         .hf-submit-btn {
@@ -576,6 +342,7 @@
         }
 
         .compare-card.bug .hf-submit-btn { background: var(--line); color: #a8a29e; }
+
         .compare-card.fix .hf-submit-btn { background: var(--green); color: #fff; }
 
         .compare-outcome-note {
@@ -585,9 +352,11 @@
         }
 
         .compare-card.bug .compare-outcome-note { color: var(--sand); }
+
         .compare-card.fix .compare-outcome-note { color: var(--green); }
 
         /* ---------- Chapter 04: threat-definition consistency ---------- */
+
         .hf-consistency-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -660,7 +429,9 @@
         }
 
         .hf-tag-inconsistent.a { background: #fee2e2; color: #b91c1c; }
+
         .hf-tag-inconsistent.b { background: #ffedd5; color: #c2410c; text-transform: uppercase; }
+
         .hf-tag-inconsistent.c { background: #fecaca; color: #991b1b; border: 1px dashed #b91c1c; }
 
         .hf-tag-unified {
@@ -673,6 +444,7 @@
         }
 
         /* ---------- Decision callout ---------- */
+
         .decision-callout {
             margin-top: 1.5rem;
             display: flex;
@@ -706,6 +478,7 @@
         }
 
         /* ---------- Technical details disclosure ---------- */
+
         .tech-details {
             margin-top: 1.5rem;
             border: 1px solid var(--line);
@@ -786,6 +559,7 @@
         }
 
         /* ---------- Reflection ---------- */
+
         .cs-reflection {
             margin-top: 2rem;
             padding: 1.75rem;
@@ -811,28 +585,6 @@
 
         .cs-reflection-text.placeholder { color: var(--ink-soft); font-style: italic; }
 
-        /* ---------- Extra highlights ---------- */
-        .cs-extra {
-            margin-top: 2rem;
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 1.25rem;
-            padding: 1.75rem;
-        }
-
-        .cs-extra-title {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 1.0625rem;
-            margin-bottom: 1rem;
-        }
-
-        .cs-extra-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.625rem;
-        }
-
         .cs-extra-list li {
             position: relative;
             padding-left: 1rem;
@@ -851,82 +603,10 @@
             background: var(--sand);
         }
 
-        /* ---------- Case study navigation ---------- */
-        .cs-case-nav {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            margin-top: 3.5rem;
-            margin-bottom: 6rem;
-        }
-
-        @media (min-width: 640px) {
-            .cs-case-nav {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .cs-case-nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.875rem;
-            padding: 1.25rem 1.5rem;
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 1.25rem;
-            box-shadow: 0 4px 24px rgba(28, 25, 23, 0.05);
-            transition: border-color 0.2s ease, transform 0.2s ease;
-        }
-
         a.cs-case-nav-btn:hover {
             border-color: var(--green);
             transform: translateY(-2px);
         }
-
-        .cs-case-nav-next {
-            justify-content: flex-end;
-            text-align: right;
-        }
-
-        .cs-case-nav-icon {
-            width: 2.25rem;
-            height: 2.25rem;
-            border-radius: 999px;
-            background: rgba(42, 100, 81, 0.1);
-            color: var(--green);
-            display: grid;
-            place-items: center;
-            flex-shrink: 0;
-        }
-
-        .cs-case-nav-label {
-            display: block;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--ink-soft);
-            font-weight: 600;
-        }
-
-        .cs-case-nav-title {
-            display: block;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            margin-top: 0.1875rem;
-            color: var(--ink);
-        }
-
-        .cs-case-nav-btn.disabled {
-            opacity: 0.45;
-            cursor: default;
-        }
-
-        .cs-case-nav-btn.disabled .cs-case-nav-icon {
-            background: var(--bg);
-            color: var(--ink-soft);
-        }
-
     </style>
 </head>
 
@@ -973,7 +653,7 @@
                 onboarding, then kept pushing on consistency, reliability, and reach as the platform matured.</p>
 
             <div class="cs-hero-visual">
-                <img src="../images/highflame-hero.png" alt="Highflame Code Agents dashboard, threat detail, and graph explorer surfaces" />
+                <img src="../images/highflame-hero.png" alt="Highflame Code Agents dashboard, threat detail, and graph explorer surfaces" width="1360" height="560" loading="lazy" decoding="async" />
             </div>
         </section>
 
