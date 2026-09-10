@@ -1,6 +1,6 @@
 # Gunjan Vasara — Portfolio
 
-Personal portfolio site: [https://goonjan.github.io/](https://goonjan.github.io/)
+Personal portfolio site: [gunjanvasara.dev](https://gunjanvasara.dev/)
 
 Senior Frontend Engineer with 7+ years building and owning complex, user-facing systems end-to-end. This site walks through detailed case studies — architecture decisions, tradeoffs, and shipped outcomes — rather than just a list of projects.
 
@@ -9,7 +9,7 @@ Senior Frontend Engineer with 7+ years building and owning complex, user-facing 
 - **Highflame** — Enterprise LLM security platform: Code Agents UI, threat-detection surfaces, telemetry
 - **Uber Databook** — Internal data insights platform used by 1,000+ engineers
 - **Coolpanda** — Motion-rich marketing site revamp with custom Lottie animations
-- **Stealth Startup** — Graph-based system architecture visualization tool
+- **Systematichq** *(anonymized as "Stealth Startup")* — Graph-based system architecture visualization tool
 
 ## Stack
 
@@ -41,7 +41,7 @@ Then visit `http://localhost:8000`.
 
 ## Deployment
 
-Hosted on GitHub Pages, auto-deployed from the `main` branch on every push. Live at [https://goonjan.github.io/](https://goonjan.github.io/).
+Hosted on GitHub Pages, auto-deployed from the `main` branch on every push. Live at [https://gunjanvasara.dev/](https://gunjanvasara.dev/) (custom domain via CNAME, backed by the `goonjan.github.io` repo).
 
 ## Contact
 
