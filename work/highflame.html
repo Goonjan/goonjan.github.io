@@ -54,6 +54,10 @@
 
         a { text-decoration: none; color: inherit; }
 
+        button { font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+
+        html, body { overflow-x: clip; }
+
         img { max-width: 100%; display: block; }
 
         .icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; flex-shrink: 0; }
@@ -126,10 +130,10 @@
         .back-link:hover { color: var(--green); }
 
         /* ---------- Hero ---------- */
-        .cs-hero { padding: 4rem 0 3rem; }
+        .cs-hero { padding-block: 4rem 3rem; }
 
         @media (min-width: 768px) {
-            .cs-hero { padding: 5.5rem 0 3.5rem; }
+            .cs-hero { padding-block: 5.5rem 3.5rem; }
         }
 
         .eyebrow {
@@ -194,7 +198,7 @@
         .cs-hero-visual img { width: 100%; height: auto; display: block; }
 
         /* ---------- Stats strip ---------- */
-        .cs-stats { padding: 2rem 0 1rem; }
+        .cs-stats { padding-block: 2rem 1rem; }
 
         .cs-stats-grid {
             display: grid;
@@ -227,7 +231,7 @@
 
         /* ---------- Chapters ---------- */
         .chapter {
-            padding: 4.5rem 0;
+            padding-block: 4.5rem;
             border-top: 1px solid var(--line);
             scroll-margin-top: 4.5rem;
         }
@@ -313,9 +317,15 @@
 
         .hf-ring-row {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 0.75rem;
             margin-top: 1.75rem;
+        }
+
+        @media (min-width: 520px) {
+            .hf-ring-row {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
         .hf-ring-tile {

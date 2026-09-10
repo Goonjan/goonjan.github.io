@@ -95,7 +95,14 @@
 
         button {
             font: inherit;
+            color: inherit;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            overflow-x: clip;
         }
 
         ul,
@@ -177,18 +184,18 @@
         }
 
         .section {
-            padding: 4rem 0;
+            padding-block: 4rem;
         }
 
         @media (min-width: 640px) {
             .section {
-                padding: 5rem 0;
+                padding-block: 5rem;
             }
         }
 
         @media (min-width: 768px) {
             .section {
-                padding: 7rem 0;
+                padding-block: 7rem;
             }
         }
 
@@ -335,12 +342,24 @@
             border-radius: 999px;
             border: 1px solid var(--line);
             background: #fff;
+            color: var(--ink);
             padding: 0.625rem;
         }
 
         @media (min-width: 768px) {
             .nav-mobile-toggle {
                 display: none;
+            }
+        }
+
+        .nav-actions {
+            display: none;
+            gap: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .nav-actions {
+                display: flex;
             }
         }
 
@@ -1568,7 +1587,7 @@
                 <a href="#contact" class="nav-link">Contact</a>
             </nav>
 
-            <div style="display: flex; gap: 10px;">
+            <div class="nav-actions">
 
                 <div class="hero-social">
                     <a href="mailto:gunjan.gojiya@gmail.com" aria-label="Email" class="social-btn">
