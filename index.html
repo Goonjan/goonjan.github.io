@@ -847,7 +847,7 @@
         }
 
         /* 5-card mosaic container: below 1024px everything just stacks in
-           reading order (row1 cards, then uber-col cards, then SystematicHQ);
+           reading order (row1 cards, then uber-col cards, then Stealth Startup);
            the row wrappers become row-direction flex only at desktop width
            (see the @media (min-width: 1024px) block further down). */
         .work-grid.mosaic {
@@ -875,7 +875,7 @@
 
         /* Tablet tier: once there's room for two cards side by side without
            cramping (~640px), pair up the Highflame/Coolpanda cards and the
-           UA->GA4/Cache Fix cards into simple 2-up rows. SystematicHQ (Canvas)
+           UA->GA4/Cache Fix cards into simple 2-up rows. Stealth Startup (Canvas)
            stays full-width since it's the tallest/most detailed card and
            doesn't have a natural partner. This is an intermediate step between
            mobile's single column and the bespoke desktop mosaic at 1024px,
@@ -959,8 +959,8 @@
                 flex-direction: column;
             }
 
-            /* ---- 5-card mosaic (Highflame / Coolpanda / Uber pair / SystematicHQ) ---- */
-            /* Row1 split (Highflame:Coolpanda) and Row2 split (Uber column:SystematicHQ)
+            /* ---- 5-card mosaic (Highflame / Coolpanda / Uber pair / Stealth Startup) ---- */
+            /* Row1 split (Highflame:Coolpanda) and Row2 split (Uber column:Stealth Startup)
                use slightly different ratios on purpose (60/40 vs 57/43) - matching the
                reference mockup, where the two column dividers are NOT vertically aligned. */
             .mosaic-row1 {
@@ -1919,11 +1919,11 @@
                     </div>
 
                     <div class="work-card mosaic-sh reveal">
-                        <a href="work/systematichq.html" class="work-card-link" data-testid="project-card-systematichq">
+                        <a href="work/stealth-startup.html" class="work-card-link" data-testid="project-card-stealth-startup">
                             <div class="work-img-wrap">
                                 <picture>
-                                    <source media="(min-width: 1024px)" srcset="./images/systematichq-hero-vertical.png">
-                                    <img src="./images/systematichq-hero-horizontal.png"
+                                    <source media="(min-width: 1024px)" srcset="./images/stealth-startup-hero-vertical.png">
+                                    <img src="./images/stealth-startup-hero-horizontal.png"
                                         alt="System architecture graph canvas" />
                                 </picture>
                             </div>
