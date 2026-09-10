@@ -2,7 +2,7 @@
 
 Personal portfolio site: [gunjanvasara.dev](https://gunjanvasara.dev/)
 
-Senior Frontend Engineer with 7+ years building and owning complex, user-facing systems end-to-end. This site walks through detailed case studies — architecture decisions, tradeoffs, and shipped outcomes — rather than just a list of projects.
+Senior Software Engineer with 7+ years building and owning complex, user-facing systems end-to-end. This site walks through detailed case studies — architecture decisions, tradeoffs, and shipped outcomes — rather than just a list of projects.
 
 ## Case studies
 
