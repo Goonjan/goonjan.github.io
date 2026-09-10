@@ -1449,7 +1449,53 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1.75rem;
+        }
+
+        .contact-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.625rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1.25rem;
+            letter-spacing: -0.01em;
+            color: var(--ink);
+            overflow-wrap: anywhere;
+            transition: color 0.2s ease;
+        }
+
+        @media (min-width: 480px) {
+            .contact-email {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .contact-email {
+                font-size: 1.875rem;
+            }
+        }
+
+        .contact-email .icon {
+            color: var(--green);
+            flex-shrink: 0;
+        }
+
+        .contact-email span {
+            text-decoration: underline;
+            text-decoration-color: var(--green);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+            transition: text-decoration-color 0.2s ease;
+        }
+
+        .contact-email:hover {
+            color: var(--green);
+        }
+
+        .contact-email:hover span {
+            text-decoration-color: currentColor;
         }
 
         .contact-secondary-links {
@@ -1484,7 +1530,7 @@
             display: flex;
             flex-direction: column;
             gap: 2rem;
-            padding: 3.5rem 0;
+            padding-block: 3.5rem;
         }
 
         @media (min-width: 768px) {
@@ -1535,11 +1581,19 @@
 
         .footer-links a,
         .footer-links button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
             color: var(--footer-ink);
             background: none;
             border: none;
             padding: 0;
             transition: color 0.2s ease;
+        }
+
+        .footer-links .icon {
+            width: 1.05em;
+            height: 1.05em;
         }
 
         .footer-links a:hover,
@@ -1549,7 +1603,7 @@
 
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1.5rem 0;
+            padding-block: 1.5rem;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
@@ -2181,13 +2235,13 @@
                         hear about it.</p>
 
                     <div class="contact-actions">
-                        <a href="mailto:gunjan.gojiya@gmail.com" class="btn-primary" data-testid="contact-email-link">
+                        <a href="mailto:gunjan.gojiya@gmail.com" class="contact-email" data-testid="contact-email-link">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
+                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <rect x="2" y="4" width="20" height="16" rx="2" />
                                 <path d="m22 6-10 7L2 6" />
                             </svg>
-                            gunjan.gojiya@gmail.com
+                            <span>gunjan.gojiya@gmail.com</span>
                         </a>
 
                         <div class="contact-secondary-links">
@@ -2231,12 +2285,42 @@
             </div>
 
             <div class="footer-links">
-                <a href="mailto:gunjan.gojiya@gmail.com" data-testid="footer-email">Email</a>
+                <a href="mailto:gunjan.gojiya@gmail.com" data-testid="footer-email">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="2" y="4" width="20" height="16" rx="2" />
+                        <path d="m22 6-10 7L2 6" />
+                    </svg>
+                    Email
+                </a>
                 <a href="https://www.linkedin.com/in/gunjan-vasara-667170175/" target="_blank" rel="noreferrer"
-                    data-testid="footer-linkedin">LinkedIn</a>
+                    data-testid="footer-linkedin">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect x="2" y="9" width="4" height="12" />
+                        <circle cx="4" cy="4" r="2" />
+                    </svg>
+                    LinkedIn
+                </a>
                 <a href="https://github.com/Goonjan" target="_blank" rel="noreferrer"
-                    data-testid="footer-github">GitHub</a>
-                <button data-resume-btn data-testid="footer-resume-btn">Resume</button>
+                    data-testid="footer-github">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path
+                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                    </svg>
+                    GitHub
+                </a>
+                <button data-resume-btn data-testid="footer-resume-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Resume
+                </button>
             </div>
         </div>
 
