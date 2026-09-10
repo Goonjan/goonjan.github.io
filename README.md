@@ -24,7 +24,7 @@ Plain HTML, CSS, and vanilla JavaScript — no framework, no build step, no depe
 │   ├── highflame.html
 │   ├── databook.html
 │   ├── coolpanda.html
-│   └── systematichq.html
+│   └── stealth-startup.html
 ├── images/              # Case-study screenshots, diagrams, video posters
 └── assets/              # Downloadable resume (PDF)
 ```
