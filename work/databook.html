@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Case study: Uber Databook — Internal Data Insights Platform built by Gunjan Vasara." />
+    <title>Uber Databook — Case Study | Gunjan Vasara</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+        :root {
+            --bg: #fbf9f6;
+            --surface: #ffffff;
+            --ink: #1c1917;
+            --ink-soft: #57534e;
+            --ink-body: #44403c;
+            --green: #2a6451;
+            --green-deep: #204c3d;
+            --sand: #f4a261;
+            --line: rgba(28, 25, 23, 0.08);
+            --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { background: var(--bg); scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        img { max-width: 100%; display: block; }
+
+        .icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; flex-shrink: 0; }
+
+        .wrap {
+            max-width: 58rem;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .wrap { padding: 0 2rem; }
+        }
+
+        /* ---------- Nav ---------- */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(251, 249, 246, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .nav-inner {
+            max-width: 58rem;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+            height: 4.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        @media (min-width: 768px) {
+            .nav-inner { padding: 0 2rem; }
+        }
+
+        .nav-logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.0625rem;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-mono {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 999px;
+            background: var(--green);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-size: 0.875rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--ink-soft);
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover { color: var(--green); }
+
+        /* ---------- Hero ---------- */
+        .cs-hero { padding: 4rem 0 3rem; }
+
+        @media (min-width: 768px) {
+            .cs-hero { padding: 5.5rem 0 3.5rem; }
+        }
+
+        .eyebrow {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .cs-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: -0.02em;
+            line-height: 1.05;
+            margin-top: 0.75rem;
+        }
+
+        @media (min-width: 768px) {
+            .cs-title { font-size: 3.5rem; }
+        }
+
+        .cs-subtitle {
+            font-size: 1.125rem;
+            color: var(--ink-soft);
+            margin-top: 0.75rem;
+        }
+
+        .cs-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag-pill {
+            font-size: 0.75rem;
+            border-radius: 999px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            padding: 0.25rem 0.75rem;
+            color: var(--ink-soft);
+        }
+
+        .cs-intro {
+            max-width: 40rem;
+            margin-top: 2rem;
+            font-size: 1.125rem;
+            color: var(--ink-body);
+            line-height: 1.7;
+        }
+
+        /* ---------- Stats strip ---------- */
+        .cs-stats {
+            padding: 2rem 0 1rem;
+        }
+
+        .cs-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-tile {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 1.25rem;
+            padding: 1.5rem 1.75rem;
+            box-shadow: 0 4px 24px rgba(28, 25, 23, 0.05);
+        }
+
+        .stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.875rem;
+            letter-spacing: -0.01em;
+            color: var(--green);
+        }
+
+        .stat-label {
+            font-size: 0.8125rem;
+            color: var(--ink-soft);
+            margin-top: 0.375rem;
+            line-height: 1.4;
+        }
+
+        /* ---------- Chapters ---------- */
+        .chapter {
+            padding: 4.5rem 0;
+            border-top: 1px solid var(--line);
+            scroll-margin-top: 4.5rem;
+        }
+
+        .chapter-head { max-width: none; }
+
+        .chapter-kicker {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .chapter-num {
+            font-family: var(--mono);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--sand);
+            letter-spacing: 0.05em;
+        }
+
+        .chapter-cat {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--ink-soft);
+            font-weight: 600;
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            letter-spacing: -0.01em;
+            margin-top: 0.625rem;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-title { font-size: 2.125rem; }
+        }
+
+        .chapter-text {
+            margin-top: 1rem;
+            color: var(--ink-body);
+            line-height: 1.75;
+            font-size: 1.0625rem;
+        }
+
+        .chapter-visual { margin-top: 2.5rem; }
+
+        /* ---------- Chapter 02: bug/fix compare ---------- */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 640px) {
+            .compare-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .compare-card {
+            border-radius: 1.25rem;
+            padding: 1.75rem;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-top: 3px solid var(--accent);
+            box-shadow: 0 4px 24px rgba(28, 25, 23, 0.05);
+        }
+
+        .compare-card.bug { --accent: var(--sand); }
+        .compare-card.fix { --accent: var(--green); }
+
+        .compare-card-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.0625rem;
+            color: var(--accent);
+            margin-bottom: 1.25rem;
+        }
+
+        .compare-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .compare-step {
+            display: flex;
+            gap: 0.625rem;
+            align-items: flex-start;
+            font-size: 0.9375rem;
+            color: var(--ink-body);
+            line-height: 1.5;
+        }
+
+        .compare-step .arrow {
+            color: var(--ink-soft);
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+
+        .compare-code {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.625rem;
+            color: var(--ink-soft);
+            display: block;
+            margin: 0.5rem 0 0 1.375rem;
+            word-break: break-all;
+        }
+
+        .compare-outcome { font-weight: 700; color: var(--accent); }
+
+        /* ---------- Chapter 03: field builder ---------- */
+        .field-builder {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 1.25rem;
+            padding: 1.75rem;
+            box-shadow: 0 4px 24px rgba(28, 25, 23, 0.05);
+        }
+
+        @media (min-width: 768px) {
+            .field-builder { padding: 2.25rem; }
+        }
+
+        .field-builder-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .field-builder-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.375rem;
+        }
+
+        .field-builder-close { color: var(--ink-soft); }
+
+        .field-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .field-input {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 0.625rem;
+            padding: 0.75rem 0.875rem;
+            font-size: 0.9375rem;
+            background: var(--bg);
+            color: var(--ink);
+            margin-bottom: 1.75rem;
+        }
+
+        .field-type-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.875rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .field-type-caption {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .field-preview {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .field-preview code {
+            font-family: var(--mono);
+            color: var(--green);
+        }
+
+        .field-select {
+            border: 1px solid var(--line);
+            border-radius: 0.625rem;
+            padding: 0.75rem 0.875rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg);
+            margin-bottom: 1.25rem;
+        }
+
+        .field-select.active {
+            border-color: var(--green);
+            box-shadow: 0 0 0 2px rgba(42, 100, 81, 0.12);
+        }
+
+        .field-select .chev { color: var(--ink-soft); transition: transform 0.2s ease; }
+        .field-select.active .chev { transform: rotate(180deg); }
+
+        .field-nested {
+            margin-left: 1.25rem;
+            padding-left: 1.25rem;
+            border-left: 2px dashed var(--line);
+        }
+
+        .field-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .field-static-pill {
+            border: 1px solid var(--line);
+            border-radius: 0.625rem;
+            padding: 0.75rem 0.875rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            background: var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .field-static-pill span:last-child {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+        }
+
+        .field-options {
+            border: 1px solid var(--line);
+            border-radius: 0.625rem;
+            overflow: hidden;
+            margin: -0.75rem 0 1.25rem;
+            box-shadow: 0 12px 30px rgba(28, 25, 23, 0.1);
+            background: var(--surface);
+        }
+
+        .field-option {
+            padding: 0.625rem 0.875rem;
+            font-size: 0.875rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--line);
+        }
+
+        .field-option:first-child { border-top: none; }
+
+        .field-option.active {
+            background: var(--bg);
+            font-weight: 600;
+            color: var(--green-deep);
+        }
+
+        .field-option .check { color: var(--green); }
+
+        .field-builder-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--line);
+        }
+
+        .btn-cancel,
+        .btn-add {
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+        }
+
+        .btn-cancel {
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink);
+        }
+
+        .btn-add { background: var(--green); color: #fff; }
+
+        /* ---------- Extra highlights ---------- */
+        .cs-extra {
+            margin-top: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 1.25rem;
+            padding: 1.75rem;
+        }
+
+        .cs-extra-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.0625rem;
+            margin-bottom: 1rem;
+        }
+
+        .cs-extra-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+
+        .cs-extra-list li {
+            position: relative;
+            padding-left: 1rem;
+            color: var(--ink-body);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .cs-extra-list .bullet {
+            position: absolute;
+            left: 0;
+            top: 0.55rem;
+            width: 0.3125rem;
+            height: 0.3125rem;
+            border-radius: 999px;
+            background: var(--sand);
+        }
+
+        /* ---------- Case study navigation ---------- */
+        .cs-case-nav {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 3.5rem;
+            margin-bottom: 6rem;
+        }
+
+        @media (min-width: 640px) {
+            .cs-case-nav {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .cs-case-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 1.25rem;
+            box-shadow: 0 4px 24px rgba(28, 25, 23, 0.05);
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        a.cs-case-nav-btn:hover {
+            border-color: var(--green);
+            transform: translateY(-2px);
+        }
+
+        .cs-case-nav-next {
+            justify-content: flex-end;
+            text-align: right;
+        }
+
+        .cs-case-nav-icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 999px;
+            background: rgba(42, 100, 81, 0.1);
+            color: var(--green);
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .cs-case-nav-label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ink-soft);
+            font-weight: 600;
+        }
+
+        .cs-case-nav-title {
+            display: block;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 0.1875rem;
+            color: var(--ink);
+        }
+
+        .cs-case-nav-btn.disabled {
+            opacity: 0.45;
+            cursor: default;
+        }
+
+        .cs-case-nav-btn.disabled .cs-case-nav-icon {
+            background: var(--bg);
+            color: var(--ink-soft);
+        }
+
+    </style>
+</head>
+
+<body>
+    <header class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-logo">
+                <span class="nav-mono">GV</span>
+                Gunjan Vasara
+            </a>
+            <a href="../index.html#work" class="back-link">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12" />
+                    <polyline points="12 19 5 12 12 5" />
+                </svg>
+                Back to work
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- ============ HERO ============ -->
+        <section class="cs-hero wrap">
+            <p class="eyebrow">Deuex · Client · 2022—25</p>
+            <h1 class="cs-title">Uber Databook</h1>
+            <p class="cs-subtitle">Internal Data Insights Platform</p>
+            <div class="cs-tags">
+                <span class="tag-pill">React</span>
+                <span class="tag-pill">TypeScript</span>
+                <span class="tag-pill">GraphQL</span>
+                <span class="tag-pill">Apollo</span>
+                <span class="tag-pill">Playwright</span>
+            </div>
+
+            <p class="cs-intro">Databook is the internal data catalog and insights platform Uber's engineering org
+                uses to discover, trust, and query internal datasets. As frontend and UI/UX owner across a
+                three-year engagement, I shipped features spanning an analytics platform migration, cache
+                reliability, and self-serve schema tooling for a platform 1,000+ engineers use daily.</p>
+        </section>
+
+        <!-- ============ STATS ============ -->
+        <section class="cs-stats wrap">
+            <div class="cs-stats-grid">
+                <div class="stat-tile">
+                    <div class="stat-value">Zero</div>
+                    <div class="stat-label">Reporting continuity gaps through the GA4 cutover</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-value">1,000+</div>
+                    <div class="stat-label">Engineers using Databook daily</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CHAPTER 01 — ANALYTICS MIGRATION ============ -->
+        <section class="chapter wrap" id="discovery">
+            <div class="chapter-head">
+                <div class="chapter-kicker">
+                    <span class="chapter-num">01</span>
+                    <span class="chapter-cat">Analytics</span>
+                </div>
+                <h2 class="chapter-title">Migrating tracking from Universal Analytics to GA4</h2>
+                <p class="chapter-text">When Google mandated the shift from Universal Analytics to GA4, I led the
+                    migration for Databook end to end. The two platforms don't share a data model — UA tracked
+                    interactions through a flat category/action/label structure, while GA4 is built entirely around
+                    events and parameters — so existing tracking couldn't be ported over as-is. I went through the
+                    tracking event by event, deciding how each UA hit should be represented in GA4's
+                    event/parameter structure, and rebuilt it accordingly.</p>
+            </div>
+
+            <div class="chapter-visual compare-grid">
+                <div class="compare-card bug">
+                    <div class="compare-card-title">Universal Analytics (before)</div>
+                    <div class="compare-steps">
+                        <div class="compare-step">User taps "Add to cart"</div>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span>tracked as a flat hit</span>
+                        </div>
+                        <code class="compare-code">category: 'Ecommerce' · action: 'Add to Cart'</code>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span>segmented later using UA Views</span>
+                        </div>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span class="compare-outcome">No native event/parameter model</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="compare-card fix">
+                    <div class="compare-card-title">GA4 (after)</div>
+                    <div class="compare-steps">
+                        <div class="compare-step">User taps "Add to cart"</div>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span>tracked as a structured event</span>
+                        </div>
+                        <code class="compare-code">event: 'add_to_cart' · params: { item_id }</code>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span>segmented using GA4 Data Filters</span>
+                        </div>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span class="compare-outcome">Structured, queryable event model</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapter-head" style="margin-top: 2.5rem;">
+                <p class="chapter-text">The harder problem was structural, not mechanical: GA4 doesn't have
+                    "views," which is how UA had handled filtering and segmenting data for different teams. I
+                    worked out how to replicate that functionality using GA4's data filters, and made sure the
+                    migration didn't break continuity with the historical data teams already relied on for
+                    reporting.</p>
+                <p class="chapter-text">Alongside the migration itself, I wrote the reference documentation the
+                    team uses to understand the new setup — the full event mapping, the views-to-filters approach,
+                    and the reasoning behind each decision, including how to set up the GA4 equivalent of views.
+                    It's still the doc people go to when they need to work with the new tracking.</p>
+            </div>
+        </section>
+
+        <!-- ============ CHAPTER 02 — CACHE FIX ============ -->
+        <section class="chapter wrap" id="reliability">
+            <div class="chapter-head">
+                <div class="chapter-kicker">
+                    <span class="chapter-num">02</span>
+                    <span class="chapter-cat">Reliability</span>
+                </div>
+                <h2 class="chapter-title">Fixing a stale-data bug at its root</h2>
+                <p class="chapter-text">Rows kept reverting to stale values after a save. Chasing it past the
+                    network and the resolvers, I traced it to Apollo's cache identity: dynamically generated row
+                    IDs meant every backend update looked like a brand-new object to the client cache. Switching
+                    to a static, content-derived ID let Apollo match and merge updates against the existing entity
+                    instead of shadowing it.</p>
+            </div>
+
+            <div class="chapter-visual compare-grid">
+                <div class="compare-card bug">
+                    <div class="compare-card-title">Dynamic ID (the bug)</div>
+                    <div class="compare-steps">
+                        <div class="compare-step">Backend sends an update</div>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span>record gets a new dynamic ID</span>
+                        </div>
+                        <code class="compare-code">tag:row12:x7f2q9 → tag:row12:m8k1p3</code>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span>Apollo cache treats it as a new object</span>
+                        </div>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span class="compare-outcome">UI keeps showing stale data</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="compare-card fix">
+                    <div class="compare-card-title">Static ID (the fix)</div>
+                    <div class="compare-steps">
+                        <div class="compare-step">Backend sends an update</div>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span>record keeps its stable ID</span>
+                        </div>
+                        <code class="compare-code">tag:row12:INV-2049 → tag:row12:INV-2049</code>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span>Apollo cache matches the existing entity</span>
+                        </div>
+                        <div class="compare-step">
+                            <span class="arrow">→</span>
+                            <span class="compare-outcome">UI updates correctly</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CHAPTER 03 — FIELD BUILDER ============ -->
+        <section class="chapter wrap" id="tooling">
+            <div class="chapter-head">
+                <div class="chapter-kicker">
+                    <span class="chapter-num">03</span>
+                    <span class="chapter-cat">Tooling</span>
+                </div>
+                <h2 class="chapter-title">A schema builder that speaks the data model</h2>
+                <p class="chapter-text">Adding a governed field to a dataset meant filing a ticket and waiting. I
+                    built a self-serve field composer that lets owners construct nested types — arrays, structs,
+                    and primitives — with a live type preview, so a request that took days now takes a
+                    minute.</p>
+            </div>
+
+            <div class="chapter-visual">
+                <div class="field-builder">
+                    <div class="field-builder-head">
+                        <span class="field-builder-title">Add Field</span>
+                        <svg class="icon field-builder-close" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="width:18px;height:18px;">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                    </div>
+
+                    <label class="field-label">Name</label>
+                    <div class="field-input">user_attributes</div>
+
+                    <div class="field-type-row">
+                        <span class="field-type-caption">Type</span>
+                        <span class="field-preview">Preview: <code>Array&lt;Struct&lt;string, string&gt;&gt;</code></span>
+                    </div>
+
+                    <span class="field-label">Field type</span>
+                    <div class="field-select">Array
+                        <svg class="icon chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+
+                    <div class="field-nested">
+                        <span class="field-label">Value type · Array element</span>
+                        <div class="field-select">Struct
+                            <svg class="icon chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                style="width:16px;height:16px;">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </div>
+
+                        <div class="field-nested">
+                            <div class="field-grid-2">
+                                <div>
+                                    <span class="field-label">Key · Struct</span>
+                                    <div class="field-static-pill">string <span>fixed</span></div>
+                                </div>
+                                <div>
+                                    <span class="field-label">Value type · Struct</span>
+                                    <div class="field-select active">string
+                                        <svg class="icon chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            style="width:16px;height:16px;">
+                                            <polyline points="18 15 12 9 6 15" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field-options">
+                                <div class="field-option active">string
+                                    <svg class="icon check" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        style="width:15px;height:15px;">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                </div>
+                                <div class="field-option">int</div>
+                                <div class="field-option">boolean</div>
+                                <div class="field-option">struct</div>
+                                <div class="field-option">array</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-builder-actions">
+                        <div class="btn-cancel">Cancel</div>
+                        <div class="btn-add">Add Field</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ ADDITIONAL CONTRIBUTIONS ============ -->
+        <section class="chapter wrap" style="padding-top: 0; border-top: none;">
+            <div class="cs-extra">
+                <div class="cs-extra-title">Additional contributions</div>
+                <ul class="cs-extra-list">
+                    <li><span class="bullet"></span>Worked across three teams over the engagement, but spent most of
+                        the time on Databook.</li>
+                    <li><span class="bullet"></span>Largely focused on adding new frontend functionality and owning
+                        entire new pages or features end to end — including the personalised chats section on
+                        datasets, the Schema Builder, and the Ownership Hierarchy page, among others.</li>
+                    <li><span class="bullet"></span>Reduced landing-page load time from ~12s to 3s through query
+                        optimisation and more efficient data handling.</li>
+                </ul>
+            </div>
+        </section>
+
+        <nav class="cs-case-nav wrap" aria-label="Case study navigation">
+            <a href="coolpanda.html" class="cs-case-nav-btn cs-case-nav-prev">
+                <span class="cs-case-nav-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+                <span class="cs-case-nav-text">
+                    <span class="cs-case-nav-label">Previous case study</span>
+                    <span class="cs-case-nav-title">Motion-Rich Marketing Site</span>
+                </span>
+            </a>
+            <a href="systematichq.html" class="cs-case-nav-btn cs-case-nav-next">
+                <span class="cs-case-nav-text">
+                    <span class="cs-case-nav-label">Next case study</span>
+                    <span class="cs-case-nav-title">Architecture Canvas</span>
+                </span>
+                <span class="cs-case-nav-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </a>
+        </nav>
+
+    </main>
+</body>
+
+</html>

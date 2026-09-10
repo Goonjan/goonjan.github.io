@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Case study: Architecture Canvas — System Architecture Visualiser built by Gunjan Vasara." />
+    <title>Architecture Canvas — Case Study | Gunjan Vasara</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+        :root {
+            --bg: #fbf9f6;
+            --surface: #ffffff;
+            --ink: #1c1917;
+            --ink-soft: #57534e;
+            --ink-body: #44403c;
+            --green: #2a6451;
+            --green-deep: #204c3d;
+            --sand: #f4a261;
+            --line: rgba(28, 25, 23, 0.08);
+            --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { background: var(--bg); scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        img { max-width: 100%; display: block; }
+
+        .icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; flex-shrink: 0; }
+
+        .wrap {
+            max-width: 58rem;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .wrap { padding: 0 2rem; }
+        }
+
+        /* ---------- Nav ---------- */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(251, 249, 246, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .nav-inner {
+            max-width: 58rem;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+            height: 4.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        @media (min-width: 768px) {
+            .nav-inner { padding: 0 2rem; }
+        }
+
+        .nav-logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.0625rem;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-mono {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 999px;
+            background: var(--green);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-size: 0.875rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--ink-soft);
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover { color: var(--green); }
+
+        /* ---------- Hero ---------- */
+        .cs-hero { padding: 4rem 0 3rem; }
+
+        @media (min-width: 768px) {
+            .cs-hero { padding: 5.5rem 0 3.5rem; }
+        }
+
+        .eyebrow {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .cs-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: -0.02em;
+            line-height: 1.05;
+            margin-top: 0.75rem;
+        }
+
+        @media (min-width: 768px) {
+            .cs-title { font-size: 3.5rem; }
+        }
+
+        .cs-subtitle {
+            font-size: 1.125rem;
+            color: var(--ink-soft);
+            margin-top: 0.75rem;
+        }
+
+        .cs-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag-pill {
+            font-size: 0.75rem;
+            border-radius: 999px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            padding: 0.25rem 0.75rem;
+            color: var(--ink-soft);
+        }
+
+        .cs-intro {
+            max-width: 40rem;
+            margin-top: 2rem;
+            font-size: 1.125rem;
+            color: var(--ink-body);
+            line-height: 1.7;
+        }
+
+        /* ---------- Stats strip ---------- */
+        .cs-stats { padding: 2rem 0 1rem; }
+
+        .cs-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-tile {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 1.25rem;
+            padding: 1.5rem 1.75rem;
+            box-shadow: 0 4px 24px rgba(28, 25, 23, 0.05);
+        }
+
+        .stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.875rem;
+            letter-spacing: -0.01em;
+            color: var(--green);
+        }
+
+        .stat-label {
+            font-size: 0.8125rem;
+            color: var(--ink-soft);
+            margin-top: 0.375rem;
+            line-height: 1.4;
+        }
+
+        /* ---------- Chapters ---------- */
+        .chapter {
+            padding: 4.5rem 0;
+            border-top: 1px solid var(--line);
+            scroll-margin-top: 4.5rem;
+        }
+
+        .chapter-head { max-width: none; }
+
+        .chapter-kicker {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .chapter-num {
+            font-family: var(--mono);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--sand);
+            letter-spacing: 0.05em;
+        }
+
+        .chapter-cat {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--ink-soft);
+            font-weight: 600;
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            letter-spacing: -0.01em;
+            margin-top: 0.625rem;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-title { font-size: 2.125rem; }
+        }
+
+        .chapter-text {
+            margin-top: 1rem;
+            color: var(--ink-body);
+            line-height: 1.75;
+            font-size: 1.0625rem;
+        }
+
+        .chapter-visual { margin-top: 2.5rem; }
+
+        /* ---------- Shared graph-visual card ---------- */
+        .shq-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 1.25rem;
+            padding: 1.75rem;
+            box-shadow: 0 4px 24px rgba(28, 25, 23, 0.05);
+        }
+
+        @media (min-width: 768px) {
+            .shq-card { padding: 2.25rem; }
+        }
+
+        .shq-card-label {
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ink-soft);
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+        }
+
+        .shq-svg-wrap { width: 100%; }
+        .shq-svg-wrap svg { width: 100%; height: auto; display: block; }
+
+        .shq-node-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            fill: var(--ink);
+        }
+
+        .shq-edge { stroke: var(--line); stroke-width: 2; }
+
+        .shq-caption {
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--line);
+            font-size: 0.8125rem;
+            color: var(--ink-soft);
+        }
+
+        /* ---------- Chapter 02: filmstrip ---------- */
+        .shq-filmstrip {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 700px) {
+            .shq-filmstrip { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .shq-frame {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 1.25rem;
+            padding: 1.25rem;
+            box-shadow: 0 4px 24px rgba(28, 25, 23, 0.05);
+        }
+
+        .shq-frame-head {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .shq-step-badge {
+            width: 1.375rem;
+            height: 1.375rem;
+            border-radius: 999px;
+            background: var(--green);
+            color: #fff;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            display: grid;
+            place-items: center;
+        }
+
+        .shq-frame-title { font-size: 0.8125rem; font-weight: 600; }
+
+        /* ---------- Chapter 03: diff legend ---------- */
+        .shq-legend {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--line);
+        }
+
+        .shq-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--ink-soft);
+        }
+
+        .shq-legend-dot {
+            width: 0.65rem;
+            height: 0.65rem;
+            border-radius: 999px;
+        }
+
+        /* ---------- Extra highlights ---------- */
+        .cs-extra {
+            margin-top: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 1.25rem;
+            padding: 1.75rem;
+        }
+
+        .cs-extra-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.0625rem;
+            margin-bottom: 1rem;
+        }
+
+        .cs-extra-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+
+        .cs-extra-list li {
+            position: relative;
+            padding-left: 1rem;
+            color: var(--ink-body);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .cs-extra-list .bullet {
+            position: absolute;
+            left: 0;
+            top: 0.55rem;
+            width: 0.3125rem;
+            height: 0.3125rem;
+            border-radius: 999px;
+            background: var(--sand);
+        }
+
+        /* ---------- Case study navigation ---------- */
+        .cs-case-nav {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 3.5rem;
+            margin-bottom: 6rem;
+        }
+
+        @media (min-width: 640px) {
+            .cs-case-nav {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .cs-case-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 1.25rem;
+            box-shadow: 0 4px 24px rgba(28, 25, 23, 0.05);
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        a.cs-case-nav-btn:hover {
+            border-color: var(--green);
+            transform: translateY(-2px);
+        }
+
+        .cs-case-nav-next {
+            justify-content: flex-end;
+            text-align: right;
+        }
+
+        .cs-case-nav-icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 999px;
+            background: rgba(42, 100, 81, 0.1);
+            color: var(--green);
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .cs-case-nav-label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ink-soft);
+            font-weight: 600;
+        }
+
+        .cs-case-nav-title {
+            display: block;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 0.1875rem;
+            color: var(--ink);
+        }
+
+        .cs-case-nav-btn.disabled {
+            opacity: 0.45;
+            cursor: default;
+        }
+
+        .cs-case-nav-btn.disabled .cs-case-nav-icon {
+            background: var(--bg);
+            color: var(--ink-soft);
+        }
+
+    </style>
+</head>
+
+<body>
+    <header class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-logo">
+                <span class="nav-mono">GV</span>
+                Gunjan Vasara
+            </a>
+            <a href="../index.html#work" class="back-link">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12" />
+                    <polyline points="12 19 5 12 12 5" />
+                </svg>
+                Back to work
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- ============ HERO ============ -->
+        <section class="cs-hero wrap">
+            <p class="eyebrow">Deuex · Stealth Startup · Jun 2021 – 2022</p>
+            <h1 class="cs-title">Architecture Canvas</h1>
+            <p class="cs-subtitle">System Architecture Visualiser</p>
+            <div class="cs-tags">
+                <span class="tag-pill">React</span>
+                <span class="tag-pill">TypeScript</span>
+                <span class="tag-pill">ReactFlow</span>
+                <span class="tag-pill">localStorage</span>
+            </div>
+
+            <p class="cs-intro">This stealth-mode startup set out to build a visual tool for modelling system architecture and
+                component interactions. As the sole developer on the product, I designed and built the
+                node-and-edge canvas that became the core of the experience, spanning everything from CRUD
+                workflows to playback and change review.</p>
+        </section>
+
+        <!-- ============ STATS ============ -->
+        <section class="cs-stats wrap">
+            <div class="cs-stats-grid">
+                <div class="stat-tile">
+                    <div class="stat-value">Solo build</div>
+                    <div class="stat-label">Sole developer on the product — from canvas architecture to shipped feature</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-value">3-way diff</div>
+                    <div class="stat-label">Added, deleted &amp; modified changes surfaced client-side before committing</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-value">Persistent history</div>
+                    <div class="stat-label">Local-state import, export &amp; commit preserved graph history across sessions</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CHAPTER 01 — CANVAS ============ -->
+        <section class="chapter wrap" id="canvas">
+            <div class="chapter-head">
+                <div class="chapter-kicker">
+                    <span class="chapter-num">01</span>
+                    <span class="chapter-cat">Canvas</span>
+                </div>
+                <h2 class="chapter-title">A canvas for services, projects, and rebases</h2>
+                <p class="chapter-text">I built the core CRUD for services and projects, the graph editing surface
+                    itself, and rebase functionality that lets a team move a project from one service to another
+                    while preserving its graph structure and history — instead of rebuilding the diagram from
+                    scratch.</p>
+            </div>
+
+            <div class="chapter-visual shq-card">
+                <div class="shq-card-label">Canvas — services, datastores, and event stores as typed nodes</div>
+                <div class="shq-svg-wrap">
+                    <img src="../images/systematichq-canvas.png" alt="Node-and-edge canvas showing a checkout-service node, orders-db datastore, and order-events event store" style="width:100%; height:auto; display:block; border-radius:10px;" />
+                </div>
+                <div class="shq-caption">The graph editing surface — services, datastores, and event stores as distinct node types, with edge properties surfaced on selection.</div>
+            </div>
+        </section>
+
+        <!-- ============ CHAPTER 02 — PLAYBACK ============ -->
+        <section class="chapter wrap" id="playback">
+            <div class="chapter-head">
+                <div class="chapter-kicker">
+                    <span class="chapter-num">02</span>
+                    <span class="chapter-cat">Playback</span>
+                </div>
+                <h2 class="chapter-title">Watching a process move through the system</h2>
+                <p class="chapter-text">A static diagram can't show you how a request actually flows. I built
+                    sequence and flow execution — letting users play back a saved flow with edges highlighting
+                    step by step, so a team could visualise exactly how a process moved through the architecture
+                    instead of inferring it from a still image.</p>
+            </div>
+
+            <div class="chapter-visual shq-card">
+                <div class="shq-card-label">Playback — Step 1 of 2, publish flow</div>
+                <div class="shq-svg-wrap">
+                    <img src="../images/systematichq-sequence.png" alt="Sequence playback view showing a publish flow at step 1 of 2, with the active edge highlighted from checkout-service into orders-db" style="width:100%; height:auto; display:block; border-radius:10px;" />
+                </div>
+                <div class="shq-caption">A saved flow played back step by step, with the active edge highlighted at each stage as it moves through the graph.</div>
+            </div>
+        </section>
+
+        <!-- ============ CHAPTER 03 — DIFF ============ -->
+        <section class="chapter wrap" id="diff">
+            <div class="chapter-head">
+                <div class="chapter-kicker">
+                    <span class="chapter-num">03</span>
+                    <span class="chapter-cat">Review</span>
+                </div>
+                <h2 class="chapter-title">Reviewing architecture changes before they commit</h2>
+                <p class="chapter-text">I designed a client-side visual diff system comparing JSON graph
+                    structures — flagging added, updated, deleted, and errored nodes at a glance — so a team could
+                    review exactly what an architecture change touched before committing it. Import, export, and
+                    commit functionality sat on top, with persistent local state preserving graph history across
+                    sessions.</p>
+            </div>
+
+            <div class="chapter-visual shq-card">
+                <div class="shq-card-label">Diff · pending review — 5 nodes</div>
+                <div class="shq-svg-wrap">
+                    <img src="../images/systematichq-diff.png" alt="Diff view of a pending graph change: checkout-service unchanged, orders-db updated, billing flagged with an error, legacy-events deleted, and order-events added" style="width:100%; height:auto; display:block; border-radius:10px;" />
+                </div>
+                <div class="shq-legend">
+                    <span class="shq-legend-item"><span class="shq-legend-dot" style="background:#16a34a;"></span>Added</span>
+                    <span class="shq-legend-item"><span class="shq-legend-dot" style="background:#d97706;"></span>Updated</span>
+                    <span class="shq-legend-item"><span class="shq-legend-dot" style="background:#fff; border:1.5px dashed #999;"></span>Deleted</span>
+                    <span class="shq-legend-item"><span class="shq-legend-dot" style="background:#dc2626;"></span>Error</span>
+                    <span class="shq-legend-item"><span class="shq-legend-dot" style="background:#fff; border:1.5px solid #ccc;"></span>Unchanged</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ ADDITIONAL HIGHLIGHTS ============ -->
+        <section class="chapter wrap" style="padding-top: 0; border-top: none;">
+            <div class="cs-extra">
+                <div class="cs-extra-title">Also shipped</div>
+                <ul class="cs-extra-list">
+                    <li><span class="bullet"></span>Added project import/export and commit functionality, with
+                        persistent local state to preserve graph history across sessions.</li>
+                    <li><span class="bullet"></span>Worked as the sole developer through the platform's initial
+                        build-out, adding its core functionality and keeping it demo-ready, before moving off the
+                        project.</li>
+                </ul>
+            </div>
+        </section>
+
+        <nav class="cs-case-nav wrap" aria-label="Case study navigation">
+            <a href="databook.html" class="cs-case-nav-btn cs-case-nav-prev">
+                <span class="cs-case-nav-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+                <span class="cs-case-nav-text">
+                    <span class="cs-case-nav-label">Previous case study</span>
+                    <span class="cs-case-nav-title">Uber Databook</span>
+                </span>
+            </a>
+            <span class="cs-case-nav-btn cs-case-nav-next disabled" aria-disabled="true">
+                <span class="cs-case-nav-text">
+                    <span class="cs-case-nav-label">Next case study</span>
+                    <span class="cs-case-nav-title">You've reached the end</span>
+                </span>
+                <span class="cs-case-nav-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </span>
+        </nav>
+
+    </main>
+</body>
+
+</html>
