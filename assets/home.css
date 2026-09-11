@@ -867,16 +867,17 @@
 /* Mobile-first image sizing: use aspect-ratio instead of a fixed
    pixel height so the crop scales fluidly with the card's actual
    width at every viewport, rather than jumping between two fixed
-   heights (which, combined with a single full-width column, used to
-   stretch the image to an extreme, overly-wide-and-short crop on
-   larger phones/small tablets). Single-column mobile gets a taller,
-   more portrait-leaning crop for a stronger full-bleed hero feel;
-   once cards pair up at the tablet tier the crop flattens back out
-   to a standard landscape ratio. Desktop (1024px+) restores the
-   original fixed-height behavior, since the hero/tall/banner/horiz/
-   canvas variants below already take over sizing at that width. */
+   heights. Desktop (1024px+) restores the original fixed-height
+   behavior, since the hero/tall/banner/horiz/canvas variants below
+   already take over sizing at that width.
+   height: auto is required here - the <img> tags carry width/height
+   attributes (for CLS), and without an explicit height the browser
+   uses that attribute's pixel value as the box height instead of
+   deriving it from aspect-ratio, which blows the crop up to the
+   image's native size. */
 .work-img-wrap img {
     width: 100%;
+    height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     transition: transform 0.5s ease;
@@ -887,6 +888,21 @@
     .work-img-wrap img {
         aspect-ratio: auto;
         height: 16rem;
+    }
+}
+
+/* The Databook (analytics/reliability) and Stealth Startup cards use a
+   portrait "before on top, after on bottom" image at every width (see
+   markup) instead of the generic 16:9 crop above. Below 1024px that
+   needs a taller box here or the flat 16:9 ratio crops it down to a
+   sliver; at 1024px+ the .horiz / .mosaic-sh rules below take over
+   sizing instead (height: 100% of the card), so this only needs to
+   apply up to the desktop breakpoint. */
+@media (max-width: 1023px) {
+    .mosaic-ga .work-img-wrap img,
+    .mosaic-cf .work-img-wrap img,
+    .mosaic-sh .work-img-wrap img {
+        aspect-ratio: 3 / 4;
     }
 }
 
